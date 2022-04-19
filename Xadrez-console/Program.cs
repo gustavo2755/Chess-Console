@@ -14,6 +14,7 @@ namespace Xadrez_console
                 tab.PutComponent(new Tower(Color.Black, tab), new Position(0, 0));
                 tab.PutComponent(new Tower(Color.Black, tab), new Position(1, 3));
                 tab.PutComponent(new King(Color.Black, tab), new Position(2, 4));
+                tab.PutComponent(new King(Color.White, tab), new Position(1, 4));
                 Screen.PrintTable(tab);
             }
             catch (TableException e)
