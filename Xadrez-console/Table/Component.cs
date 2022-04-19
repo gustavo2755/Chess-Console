@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Xadrez_console.Chess;
 
 namespace Xadrez_console.Table
 {
@@ -13,12 +10,16 @@ namespace Xadrez_console.Table
         public int QtdMoviments { get; protected set; }
         public Tables Table { get; protected set; }
 
-        public Component(Possition position, Color color, Tables table)
+        public Component( Color color, Tables table)
         {
-            Position = position;
+            Position = null;
             Color = color;
             Table = table;
             QtdMoviments = 0;
+        }
+
+        public Component(Tables table)
+        {
         }
     }
 }

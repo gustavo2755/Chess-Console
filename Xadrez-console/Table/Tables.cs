@@ -23,5 +23,11 @@ namespace Xadrez_console.Table
         {
             return pecas [linha, coluna];
         }
+
+        public void PutComponent (Component p,Possition pos)
+        {
+            pecas[pos.Line, pos.Colun] = p;
+            p.Position = pos;
+        }
     }
 }
