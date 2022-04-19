@@ -9,12 +9,18 @@ namespace Xadrez_console
     {
         static void Main(string[] args)
         {
-            Tables tab = new Tables(8, 8);
-            tab.PutComponent(new Tower(Color.Black,tab), new Possition(0, 0));
-            tab.PutComponent(new Tower(Color.Black, tab), new Possition(1, 3));
-            tab.PutComponent(new King(Color.Black, tab), new Possition(2, 4));
-            Screen.PrintTable(tab);
-
+            try
+            {
+                Tables tab = new Tables(8, 8);
+                tab.PutComponent(new Tower(Color.Black, tab), new Position(0, 0));
+                tab.PutComponent(new Tower(Color.Black, tab), new Position(1, 3));
+                tab.PutComponent(new King(Color.Black, tab), new Position(2, 4));
+                Screen.PrintTable(tab);
+            }
+            catch (TableException e)
+            {
+                Console.WriteLine( e.Message );
+            }
         }
     }
 }

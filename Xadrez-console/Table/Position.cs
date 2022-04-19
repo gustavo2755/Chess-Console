@@ -3,12 +3,12 @@
 
 namespace Xadrez_console.Table
 {
-     public class Possition
+     public class Position
     {
         public int Line { get; set; }
         public int Colun { get; set; }
 
-        public Possition(int line, int colun)
+        public Position(int line, int colun)
         {
             Line = line;
             Colun = colun;

@@ -5,7 +5,7 @@ namespace Xadrez_console.Table
 {
      public class Component
     {
-        public Possition Position { get; set; }
+        public Position Position { get; set; }
         public Color Color  { get; protected set; }
         public int QtdMoviments { get; protected set; }
         public Tables Table { get; protected set; }

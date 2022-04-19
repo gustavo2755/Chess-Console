@@ -50,7 +50,8 @@
     <Compile Include="Screen.cs" />
     <Compile Include="Table\Color.cs" />
     <Compile Include="Table\Component.cs" />
-    <Compile Include="Table\Possition.cs" />
+    <Compile Include="Table\Position.cs" />
+    <Compile Include="Table\TableException.cs" />
     <Compile Include="Table\Tables.cs" />
   </ItemGroup>
   <ItemGroup>
