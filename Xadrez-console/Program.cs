@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Xadrez_console.Table;
 using Xadrez_console.Chess;
 
