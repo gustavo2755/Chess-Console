@@ -39,6 +39,17 @@ namespace Xadrez_console.Table
             pecas[pos.Line, pos.Colun] = p;
             p.Position = pos;
         }
+        public Component WithdrawComponet(Position pos)
+        {
+            if (component(pos) == null)
+            {
+                return null;
+            }
+            Component aux = component(pos);
+            aux.Position = null;
+            pecas[pos.Line, pos.Colun] = null;
+            return aux;
+        }
 
         /* Encurtar esse método ?? */
         public bool ValidPossition (Position pos)

@@ -10,12 +10,20 @@ namespace Xadrez_console
         {
             try
             {
-                Tables tab = new Tables(8, 8);
-                tab.PutComponent(new Tower(Color.Black, tab), new Position(0, 0));
-                tab.PutComponent(new Tower(Color.Black, tab), new Position(1, 3));
-                tab.PutComponent(new King(Color.Black, tab), new Position(2, 4));
-                tab.PutComponent(new King(Color.White, tab), new Position(1, 4));
-                Screen.PrintTable(tab);
+                
+                ChessMatch Play = new ChessMatch();
+                while (! Play.Finished)
+                {
+                    Console.Clear();
+                    Screen.PrintTable(Play.tab);
+
+                    Console.Write(" Type the origin : ");         
+                    Position origin = Screen.ReadChessPosition().ToChessPosition();
+                    Console.Write(" Type the destiny : ");
+                    Position destiny = Screen.ReadChessPosition().ToChessPosition();
+                    Play.Moviment(origin, destiny);
+                }
+                
             }
             catch (TableException e)
             {

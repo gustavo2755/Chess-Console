@@ -54,5 +54,16 @@ namespace Xadrez_console
                 Console.ForegroundColor = aux;
             }
         }
+
+        public static ChessPosition ReadChessPosition()
+        {
+            string s = Console.ReadLine();
+            char colun = s[0];
+            int line = int.Parse(s[1] + "");
+
+            return new ChessPosition(colun, line);
+            
+        }
     }
+
 }

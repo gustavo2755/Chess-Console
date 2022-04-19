@@ -21,5 +21,9 @@ namespace Xadrez_console.Table
         public Component(Tables table)
         {
         }
+        public void IncrementMoviment()
+        {
+            QtdMoviments++;
+        }
     }
 }
