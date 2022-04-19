@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Xadrez_console.Table
 {
-    enum Color 
+    public enum Color 
     {
         White,
         Black

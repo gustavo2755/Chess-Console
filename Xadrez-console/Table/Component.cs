@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Xadrez_console.Table
 {
-     class Component
+     public class Component
     {
         public Possition Position { get; set; }
         public Color Color  { get; protected set; }
         public int QtdMoviments { get; protected set; }
-        public Table Table { get; protected set; }
+        public Tables Table { get; protected set; }
 
-        public Component(Possition position, Color color, Table table)
+        public Component(Possition position, Color color, Tables table)
         {
             Position = position;
             Color = color;

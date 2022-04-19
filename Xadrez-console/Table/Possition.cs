@@ -3,7 +3,7 @@
 
 namespace Xadrez_console.Table
 {
-     class Possition
+     public class Possition
     {
         public int Line { get; set; }
         public int Colun { get; set; }
