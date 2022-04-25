@@ -15,7 +15,7 @@ namespace Xadrez_console.Table
             pecas = new Component[lines, coluns];
         }
 
-        public Component component ( int linha, int coluna)
+        public Component Component ( int linha, int coluna)
         {
             return pecas [linha, coluna];
         }

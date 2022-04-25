@@ -15,16 +15,8 @@ namespace Xadrez_console
                 Console.Write((tab.Lines - i) + " ");
                 for (int j = 0; j < tab.Coluns; j++)
                 {
-                    if (tab.component(i, j) == null)
-                    {
-                        Console.Write("- ");
-                    }
-                    else
-                    {
-                        Screen.PrintComponent(tab.component(i,j));
-                        Console.Write(" ");
-                    }
-
+                      Screen.PrintComponent(tab.Component(i, j));
+ 
                 }
                 Console.WriteLine();
             }
@@ -34,24 +26,63 @@ namespace Xadrez_console
 
             Console.WriteLine("\n");
 
+        }
+
+        public static void PrintTable(Tables tab, bool[,] possiblepositions)
+        {
+            ConsoleColor OriginalBackground = Console.BackgroundColor;
+            ConsoleColor DiferentBackground = ConsoleColor.DarkGray;
+            for (int i = 0; i < tab.Lines; i++)
+            {
+                Console.Write((tab.Lines - i) + " ");
+                for (int j = 0; j < tab.Coluns; j++)
+                {
+                    if (possiblepositions[i,j] == true)
+                    {
+                        Console.BackgroundColor = DiferentBackground;
+                    }
+                    else
+                    {
+                        Console.BackgroundColor = OriginalBackground;
+                    }
+                    Screen.PrintComponent(tab.Component(i, j));
+                    Console.BackgroundColor = OriginalBackground;
+
+                }
+                Console.WriteLine();
+            }
+
+            Console.Write("  a b c d e f g h ");
+            Console.BackgroundColor = OriginalBackground;
 
 
-
+            Console.WriteLine("\n");
 
         }
+
+
         public static void PrintComponent(Component component)
         {
-            if (component.Color == Color.White)
+            if (component == null)
             {
-                Console.Write(component);
-
+                Console.Write("- ");
             }
             else
             {
-                ConsoleColor aux = Console.ForegroundColor;
-                Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.Write(component);
-                Console.ForegroundColor = aux;
+
+                if (component.Color == Color.White)
+                {
+                    Console.Write(component);
+
+                }
+                else
+                {
+                    ConsoleColor aux = Console.ForegroundColor;
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.Write(component);
+                    Console.ForegroundColor = aux;
+                }
+                Console.Write(" ");
             }
         }
 
@@ -62,7 +93,7 @@ namespace Xadrez_console
             int line = int.Parse(s[1] + "");
 
             return new ChessPosition(colun, line);
-            
+
         }
     }
 

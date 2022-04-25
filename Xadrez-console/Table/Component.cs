@@ -3,7 +3,7 @@ using Xadrez_console.Chess;
 
 namespace Xadrez_console.Table
 {
-     public class Component
+     public abstract class Component
     {
         public Position Position { get; set; }
         public Color Color  { get; protected set; }
@@ -17,10 +17,12 @@ namespace Xadrez_console.Table
             Table = table;
             QtdMoviments = 0;
         }
-
+        public abstract bool[,] PossibleMoves();
+       
+/*
         public Component(Tables table)
         {
-        }
+        }*/
         public void IncrementMoviment()
         {
             QtdMoviments++;

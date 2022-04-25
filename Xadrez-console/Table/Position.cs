@@ -13,7 +13,11 @@ namespace Xadrez_console.Table
             Line = line;
             Colun = colun;
         }
-
+        public void DefineValues(int line, int colun)
+        {
+            Line = line;
+            Colun = colun;
+        }
         public override string ToString()
         {
             return " line :" + Line + " colun :" + Colun; 
