@@ -5,10 +5,10 @@ namespace Xadrez_console.Chess
 {
     class ChessMatch
     {
-        public Tables tab { get; protected set; }
-        private int turn;
-        private Color ActualPlayer;
-        public bool Finished { get; protected set; }
+        public Tables tab { get; private set; }
+        public int turn{ get; private set; }
+        public Color ActualPlayer { get; private set; }
+        public bool Finished { get; private set; }
 
         public ChessMatch()
         {
@@ -18,7 +18,7 @@ namespace Xadrez_console.Chess
             ActualPlayer = Color.White;
             PutAllPiecies();
         }
-
+        
         public void Moviment(Position origen, Position destination)
         {
             Component p = tab.WithdrawComponet(origen);
@@ -26,6 +26,51 @@ namespace Xadrez_console.Chess
             Component Capturedcomponent = tab.WithdrawComponet(destination);
             tab.PutComponent(p, destination);
         }
+
+        public void Play (Position origem , Position destiny)
+        {
+            Moviment(origem,destiny);
+            turn ++;
+            ChangePlayer();
+        }
+        private void ChangePlayer()
+        {
+            if (ActualPlayer == Color.White)
+            {
+                ActualPlayer = Color.Black;
+            }
+            else
+            {
+                ActualPlayer = Color.White;
+            }
+        }
+
+        public void ConfirmOrigenPosition(Position pos)
+        {
+            if (tab.component (pos) == null)
+            {
+                throw new TableException(" There is no piece in this position ");
+            }
+            if (ActualPlayer != tab.component(pos).Color)
+            {
+                throw new TableException(" The piece that was choose isn't yours ");
+            }
+            if (!tab.component(pos).ValidatePossibleMoviments())
+            {
+                throw new TableException(" There is no posible moviments to this piece ");
+            }
+
+        }
+
+       public void ConfirmDestinyPosition(Position origin,Position destiny)
+        {
+            if (!tab.component(origin).CanMoveTo(destiny))
+            {
+                throw new TableException(" Invalid destiny Position ");
+            }
+
+        }
+
           public void PutAllPiecies()
         {
             tab.PutComponent(new Tower(Color.Black, tab), new ChessPosition('c',1).ToChessPosition());

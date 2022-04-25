@@ -19,13 +19,33 @@ namespace Xadrez_console.Table
         }
         public abstract bool[,] PossibleMoves();
        
-/*
-        public Component(Tables table)
-        {
-        }*/
+
         public void IncrementMoviment()
         {
             QtdMoviments++;
+        }
+
+        public bool CanMoveTo(Position pos)
+        {
+            return PossibleMoves()[pos.Line, pos.Colun];
+        }
+
+
+        public bool ValidatePossibleMoviments ()
+        {
+            bool[,] mat = PossibleMoves();
+            for (int i = 0; i < Table.Lines; i++)
+            {
+                for (int j = 0; j < Table.Coluns; j++)
+                {
+                    if (mat[i, j] == true)
+                    {
+                        return true;
+                    }
+                }
+
+            }
+            return false;
         }
     }
 }
