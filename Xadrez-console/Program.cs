@@ -17,11 +17,10 @@ namespace Xadrez_console
                     try
                     {
                         Console.Clear();
-                        Screen.PrintTable(Play.tab);
-                        Console.WriteLine(" Turn : " + Play.turn);
-                        Console.WriteLine(" Waiting play from : " + Play.ActualPlayer);
+                        Screen.PrintMatch(Play);
+                       
                         Console.WriteLine();
-
+                        
                         Console.Write(" Type the origin : ");
                         Position origin = Screen.ReadChessPosition().ToChessPosition();
                         Play.ConfirmOrigenPosition(origin);

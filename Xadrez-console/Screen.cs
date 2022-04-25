@@ -1,6 +1,7 @@
 ﻿using System;
 using Xadrez_console.Table;
 using Xadrez_console.Chess;
+using System.Collections.Generic;
 
 
 
@@ -8,6 +9,44 @@ namespace Xadrez_console
 {
     class Screen
     {
+        public static void PrintMatch(ChessMatch play)
+        {
+            
+            Screen.PrintTable(play.tab);
+            PrintCapturedPiecesLis(play);
+            Console.WriteLine();
+            Console.WriteLine(" Turn : " + play.turn);
+            Console.WriteLine(" Waiting play from : " + play.ActualPlayer);
+        }
+
+        public static void PrintCapturedPiecesLis(ChessMatch play)
+        {
+            Console.WriteLine(" Captured pieces : ");
+            Console.Write(" White : ");
+            PrintStruct(play.CapturedPiecesByColor(Color.White));
+            Console.WriteLine();
+            Console.Write(" Black : ");
+            ConsoleColor aux = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            PrintStruct(play.CapturedPiecesByColor(Color.Black));
+            Console.ForegroundColor = aux;
+            Console.WriteLine();
+        }
+
+        public static void PrintStruct(HashSet<Component> aux)
+        {
+            Console.Write("(");
+
+            foreach (Component x in aux)
+            {
+                Console.Write(x + " ");
+            }
+
+            Console.Write(")");
+           
+        }
+
+
         public static void PrintTable(Tables tab)
         {
             for (int i = 0; i < tab.Lines; i++)
