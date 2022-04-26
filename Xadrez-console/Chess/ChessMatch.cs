@@ -35,9 +35,9 @@ namespace Xadrez_console.Chess
 
       
 
-        public Component Moviment(Position origen, Position destination)
+        public Component Moviment(Position origin, Position destination)
         {
-            Component p = tab.WithdrawComponet(origen);
+            Component p = tab.WithdrawComponet(origin);
             p.IncrementMoviment();
             Component CapturedComponent = tab.WithdrawComponet(destination);
             tab.PutComponent(p, destination);
@@ -45,6 +45,28 @@ namespace Xadrez_console.Chess
             {
                 CapturedPiecesList.Add(CapturedComponent);
             }
+
+            //#SpecialMove Roque
+            //litlle
+            if(p is King && destination.Colun == origin.Colun +2 )
+            {
+                Position originT = new Position(origin.Line, origin.Colun + 3);
+                Position destinyT = new Position(origin.Line, origin.Colun + 1);
+                Component T = tab.WithdrawComponet(originT);
+                T.IncrementMoviment();
+                tab.PutComponent(T, destinyT);
+            }
+            //big
+            if (p is King && destination.Colun == origin.Colun - 2)
+            {
+                Position originT = new Position(origin.Line, origin.Colun - 4);
+                Position destinyT = new Position(origin.Line, origin.Colun - 1);
+                Component T = tab.WithdrawComponet(originT);
+                T.IncrementMoviment();
+                tab.PutComponent(T, destinyT);
+            }
+
+
             return CapturedComponent;
         }
 
@@ -164,16 +186,36 @@ namespace Xadrez_console.Chess
         }
 
 
-        public void UnmakeMoviment(Position origem,Position destiny,Component capturedPiece)
+        public void UnmakeMoviment(Position origin,Position destiny,Component capturedPiece)
         {
-            Component c = tab.WithdrawComponet(destiny);
-            c.DecrementMoviment();
+            Component p = tab.WithdrawComponet(destiny);
+            p.DecrementMoviment();
             if(capturedPiece != null)
             {
                 tab.PutComponent(capturedPiece, destiny);
                 CapturedPiecesList.Remove(capturedPiece);
             }
-            tab.PutComponent(c, origem);
+            tab.PutComponent(p, origin);
+
+            //#SpecialMove Roque
+            //litlle
+            if (p is King && destiny.Colun == origin.Colun + 2)
+            {
+                Position originT = new Position(origin.Line, origin.Colun + 3);
+                Position destinyT = new Position(origin.Line, origin.Colun + 1);
+                Component T = tab.WithdrawComponet(destinyT);
+                T.DecrementMoviment();
+                tab.PutComponent(T, originT);
+            }
+            //big
+            if (p is King && destiny.Colun == origin.Colun - 2)
+            {
+                Position originT = new Position(origin.Line, origin.Colun - 4);
+                Position destinyT = new Position(origin.Line, origin.Colun - 1);
+                Component T = tab.WithdrawComponet(destinyT);
+                T.IncrementMoviment();
+                tab.PutComponent(T, originT);
+            }
 
         }
 
@@ -255,7 +297,7 @@ namespace Xadrez_console.Chess
             PutNewPiece('b', 1, new Knight(Color.White, tab));
             PutNewPiece('c', 1, new Bishop(Color.White, tab));
             PutNewPiece('d', 1, new Queen(Color.White, tab));
-            PutNewPiece('e', 1, new King(Color.White, tab));
+            PutNewPiece('e', 1, new King(Color.White, tab, this));
             PutNewPiece('f', 1, new Bishop(Color.White, tab));
             PutNewPiece('g', 1, new Knight(Color.White, tab));
             PutNewPiece('h', 1, new Rook(Color.White, tab));
@@ -272,7 +314,7 @@ namespace Xadrez_console.Chess
             PutNewPiece('b', 8, new Knight(Color.Black, tab));
             PutNewPiece('c', 8, new Bishop(Color.Black, tab));
             PutNewPiece('d', 8, new Queen(Color.Black, tab)); 
-            PutNewPiece('e', 8, new King(Color.Black, tab));
+            PutNewPiece('e', 8, new King(Color.Black, tab,this));
             PutNewPiece('f', 8, new Bishop(Color.Black, tab));
             PutNewPiece('g', 8, new Knight(Color.Black, tab));
             PutNewPiece('h', 8, new Rook(Color.Black, tab));

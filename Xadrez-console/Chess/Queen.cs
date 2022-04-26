@@ -4,8 +4,10 @@ namespace Xadrez_console.Chess
 {
     internal class Queen : Component
     {
+
         public Queen(Color color, Tables table) : base(color, table)
         {
+            
         }
 
         public override string ToString()
@@ -132,6 +134,9 @@ namespace Xadrez_console.Chess
                 pos.DefineValues(pos.Line + 1, pos.Colun + 1);
 
             }
+
+           
+
             return mat;
         }
 
