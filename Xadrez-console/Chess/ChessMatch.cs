@@ -251,18 +251,40 @@ namespace Xadrez_console.Chess
 
           public void PutAllPiecies()
         {
-            PutNewPiece('c', 2, new Tower(Color.White, tab));
-            PutNewPiece('d', 1, new King(Color.White, tab));
-            PutNewPiece('c', 1, new Tower(Color.White, tab));
-            PutNewPiece('d', 2, new Tower(Color.White, tab));
-            PutNewPiece('e', 2, new Tower(Color.White, tab));
-            PutNewPiece('e', 1, new Tower(Color.White, tab));
-            PutNewPiece('d', 8, new King(Color.Black, tab));
-            PutNewPiece('c', 8, new Tower(Color.Black, tab));
-            PutNewPiece('e', 8, new Tower(Color.Black, tab));
-            PutNewPiece('d', 7, new Tower(Color.Black, tab));
-            PutNewPiece('c', 7, new Tower(Color.Black, tab));
-            PutNewPiece('e', 7, new Tower(Color.Black, tab));
+            PutNewPiece('a', 1, new Rook(Color.White, tab));
+            PutNewPiece('b', 1, new Knight(Color.White, tab));
+            PutNewPiece('c', 1, new Bishop(Color.White, tab));
+            PutNewPiece('d', 1, new Queen(Color.White, tab));
+            PutNewPiece('e', 1, new King(Color.White, tab));
+            PutNewPiece('f', 1, new Bishop(Color.White, tab));
+            PutNewPiece('g', 1, new Knight(Color.White, tab));
+            PutNewPiece('h', 1, new Rook(Color.White, tab));
+            PutNewPiece('a', 2, new Pawn(Color.White, tab));
+            PutNewPiece('b', 2, new Pawn(Color.White, tab));
+            PutNewPiece('c', 2, new Pawn(Color.White, tab));
+            PutNewPiece('d', 2, new Pawn(Color.White, tab));
+            PutNewPiece('e', 2, new Pawn(Color.White, tab));
+            PutNewPiece('f', 2, new Pawn(Color.White, tab));
+            PutNewPiece('g', 2, new Pawn(Color.White, tab));
+            PutNewPiece('h', 2, new Pawn(Color.White, tab));
+
+            PutNewPiece('a', 8, new Rook(Color.Black, tab));
+            PutNewPiece('b', 8, new Knight(Color.Black, tab));
+            PutNewPiece('c', 8, new Bishop(Color.Black, tab));
+            PutNewPiece('d', 8, new Queen(Color.Black, tab)); 
+            PutNewPiece('e', 8, new King(Color.Black, tab));
+            PutNewPiece('f', 8, new Bishop(Color.Black, tab));
+            PutNewPiece('g', 8, new Knight(Color.Black, tab));
+            PutNewPiece('h', 8, new Rook(Color.Black, tab));
+            PutNewPiece('a', 7, new Pawn(Color.Black, tab));
+            PutNewPiece('b', 7, new Pawn(Color.Black, tab));
+            PutNewPiece('c', 7, new Pawn(Color.Black, tab));
+            PutNewPiece('d', 7, new Pawn(Color.Black, tab));
+            PutNewPiece('e', 7, new Pawn(Color.Black, tab));
+            PutNewPiece('f', 7, new Pawn(Color.Black, tab));
+            PutNewPiece('g', 7, new Pawn(Color.Black, tab));
+            PutNewPiece('h', 7, new Pawn(Color.Black, tab)); 
+            
         }
     }
 }
