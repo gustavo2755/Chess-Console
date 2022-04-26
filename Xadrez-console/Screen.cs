@@ -17,6 +17,10 @@ namespace Xadrez_console
             Console.WriteLine();
             Console.WriteLine(" Turn : " + play.turn);
             Console.WriteLine(" Waiting play from : " + play.ActualPlayer);
+            if (play.check)
+            {
+                Console.WriteLine(" You are in check ");
+            }
         }
 
         public static void PrintCapturedPiecesLis(ChessMatch play)

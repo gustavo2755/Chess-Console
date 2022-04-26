@@ -25,6 +25,11 @@ namespace Xadrez_console.Table
             QtdMoviments++;
         }
 
+        public void DecrementMoviment()
+        {
+            QtdMoviments--;
+        }
+
         public bool CanMoveTo(Position pos)
         {
             return PossibleMoves()[pos.Line, pos.Colun];

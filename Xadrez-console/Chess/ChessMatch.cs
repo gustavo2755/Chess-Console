@@ -10,16 +10,18 @@ namespace Xadrez_console.Chess
         public int turn{ get; private set; }
         public Color ActualPlayer { get; private set; }
         public bool Finished { get; private set; }
-        private HashSet<Component> ComponentsList;
+        private HashSet<Component> PiecesList;
         private HashSet<Component> CapturedPiecesList;
-
+        public bool check { get; private set; }
+        
         public ChessMatch()
         {
             tab = new Tables(8, 8);
             turn = 1;
             Finished = false;
             ActualPlayer = Color.White;
-            ComponentsList = new HashSet<Component>();
+            check = false;
+            PiecesList = new HashSet<Component>();
             CapturedPiecesList = new HashSet<Component>();
             PutAllPiecies();
 
@@ -28,12 +30,12 @@ namespace Xadrez_console.Chess
         public void PutNewPiece(char colun,int line, Component component)
         {
             tab.PutComponent(component,new ChessPosition(colun,line).ToChessPosition());
-            ComponentsList.Add(component);
+            PiecesList.Add(component);
         }
 
       
 
-        public void Moviment(Position origen, Position destination)
+        public Component Moviment(Position origen, Position destination)
         {
             Component p = tab.WithdrawComponet(origen);
             p.IncrementMoviment();
@@ -42,6 +44,52 @@ namespace Xadrez_console.Chess
             if(CapturedComponent != null)
             {
                 CapturedPiecesList.Add(CapturedComponent);
+            }
+            return CapturedComponent;
+        }
+
+        private Component King(Color c)
+        {
+            foreach(Component x in PiecesByColor(c))
+            {
+                if (x is King)
+                {
+                    return x;
+                }
+            }
+            return null;
+           
+        }
+
+        public bool Check (Color c)
+        {
+            Component k = King(c);
+            if (k == null)
+            {
+                throw new TableException(" There is no King with this color in this table ");
+            }
+            foreach (Component x in PiecesByColor(Enemy(c)))
+            {
+                bool[,] mat = x.PossibleMoves();
+                if (mat[k.Position.Line,k.Position.Colun])
+                {
+                    return true;
+                }
+                
+            }
+            return false;
+        }
+
+        private Color Enemy (Color c)
+        {
+            if (c == Color.White)
+            {
+                return Color.Black;
+
+            }
+            else
+            {
+                return Color.White;
             }
         }
 
@@ -57,12 +105,56 @@ namespace Xadrez_console.Chess
             }
             return aux;
         }
+        public HashSet<Component> PiecesByColor(Color c)
+        {
+            HashSet<Component> aux = new HashSet<Component>();
+            foreach (Component x in PiecesList)
+            {
+                if (x.Color == c)
+                {
+                    aux.Add(x);
+                }
+            }
+            return aux;
+        }
+
+
+        public void UnmakeMoviment(Position origem,Position destiny,Component capturedPiece)
+        {
+            Component c = tab.WithdrawComponet(destiny);
+            c.DecrementMoviment();
+            if(capturedPiece != null)
+            {
+                tab.PutComponent(capturedPiece, destiny);
+                CapturedPiecesList.Remove(capturedPiece);
+            }
+            tab.PutComponent(c, origem);
+
+        }
 
         public void Play (Position origem , Position destiny)
         {
-            Moviment(origem,destiny);
-            turn ++;
+            
+            Component capturedpiece = Moviment(origem,destiny);
+
+            if (Check(ActualPlayer))
+            {
+                UnmakeMoviment(origem,destiny, capturedpiece);
+                throw new TableException(" U cannot put ur own king in check ");
+            }
+
+            if (Check(Enemy(ActualPlayer)))
+            {
+                check = true;
+            }
+            else
+            {
+                check = false;
+            }
+
+            turn++;
             ChangePlayer();
+
         }
         private void ChangePlayer()
         {
@@ -106,11 +198,18 @@ namespace Xadrez_console.Chess
 
           public void PutAllPiecies()
         {
-            PutNewPiece('a', 1, new Tower(Color.White, tab));
-            PutNewPiece('b', 1, new King(Color.White, tab));
-            PutNewPiece('c', 1, new Tower(Color.Black, tab));
-            PutNewPiece('d', 1, new Tower(Color.Black, tab));
-            PutNewPiece('e',1, new Tower(Color.Black, tab));
+            PutNewPiece('c', 2, new Tower(Color.White, tab));
+            PutNewPiece('d', 1, new King(Color.White, tab));
+            PutNewPiece('c', 1, new Tower(Color.White, tab));
+            PutNewPiece('d', 2, new Tower(Color.White, tab));
+            PutNewPiece('e', 2, new Tower(Color.White, tab));
+            PutNewPiece('e', 1, new Tower(Color.White, tab));
+            PutNewPiece('d', 8, new King(Color.Black, tab));
+            PutNewPiece('c', 8, new Tower(Color.Black, tab));
+            PutNewPiece('e', 8, new Tower(Color.Black, tab));
+            PutNewPiece('d', 7, new Tower(Color.Black, tab));
+            PutNewPiece('c', 7, new Tower(Color.Black, tab));
+            PutNewPiece('e', 7, new Tower(Color.Black, tab));
         }
     }
 }
