@@ -68,14 +68,20 @@ namespace Xadrez_console.Chess
             {
                 throw new TableException(" There is no King with this color in this table ");
             }
+
             foreach (Component x in PiecesByColor(Enemy(c)))
             {
-                bool[,] mat = x.PossibleMoves();
-                if (mat[k.Position.Line,k.Position.Colun])
+             
+                if ( x.Position != null)
                 {
-                    return true;
+                    bool[,] mat = x.PossibleMoves();
+                    if (mat[k.Position.Line, k.Position.Colun])
+                    {
+                        return true;
+                    }
+
                 }
-                
+
             }
             return false;
         }

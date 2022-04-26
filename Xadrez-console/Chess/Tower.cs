@@ -23,6 +23,7 @@ namespace Xadrez_console.Chess
             bool[,] mat = new bool[Table.Lines, Table.Coluns];
             Position pos = new Position(0, 0);
             //up
+
             pos.DefineValues(Position.Line - 1, Position.Colun);
             while (Table.ValidPossition(pos) && CanMove(pos))
             {
