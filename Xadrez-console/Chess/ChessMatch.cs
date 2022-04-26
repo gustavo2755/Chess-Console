@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Xadrez_console.Table;
 
 namespace Xadrez_console.Chess
 {
-    class ChessMatch
+    public class ChessMatch
     {
         public Tables tab { get; private set; }
         public int turn{ get; private set; }
@@ -13,7 +12,8 @@ namespace Xadrez_console.Chess
         private HashSet<Component> PiecesList;
         private HashSet<Component> CapturedPiecesList;
         public bool check { get; private set; }
-        
+        public Component EnPassant { get; private set; }
+
         public ChessMatch()
         {
             tab = new Tables(8, 8);
@@ -21,6 +21,7 @@ namespace Xadrez_console.Chess
             Finished = false;
             ActualPlayer = Color.White;
             check = false;
+            EnPassant = null;
             PiecesList = new HashSet<Component>();
             CapturedPiecesList = new HashSet<Component>();
             PutAllPiecies();
@@ -64,6 +65,25 @@ namespace Xadrez_console.Chess
                 Component T = tab.WithdrawComponet(originT);
                 T.IncrementMoviment();
                 tab.PutComponent(T, destinyT);
+            }
+
+            //#SpecialMove EnPassan
+            if(p is Pawn)
+            {
+                if ( origin.Colun != destination.Colun && CapturedComponent == null)
+                {
+                    Position posP;
+                    if(p.Color == Color.White)
+                    {
+                        posP = new Position(destination.Line + 1, destination.Colun );
+                    }
+                    else
+                    {
+                        posP = new Position(destination.Line - 1, destination.Colun);
+                    }
+                    CapturedComponent = tab.WithdrawComponet(posP);
+                    CapturedPiecesList.Add(CapturedComponent);
+                }
             }
 
 
@@ -217,16 +237,38 @@ namespace Xadrez_console.Chess
                 tab.PutComponent(T, originT);
             }
 
+
+            //#SpecialMove EnPassan
+            if (p is Pawn)
+            {
+                if (origin.Colun != destiny.Colun && capturedPiece == EnPassant)
+                {
+                    Component pawn = tab.WithdrawComponet(destiny);
+                    Position posP;
+                    if(p.Color == Color.White)
+                    {
+                        posP = new Position (3,destiny.Colun);
+                    }
+                    else
+                    {
+                        posP = new Position(4, destiny.Colun);
+                    }
+
+                    tab.PutComponent(pawn, posP);
+                }
+            }
+
+
         }
 
-        public void Play (Position origem , Position destiny)
+        public void Play (Position origin , Position destiny)
         {
             
-            Component capturedpiece = Moviment(origem,destiny);
+            Component capturedpiece = Moviment(origin,destiny);
 
             if (Check(ActualPlayer))
             {
-                UnmakeMoviment(origem,destiny, capturedpiece);
+                UnmakeMoviment(origin,destiny, capturedpiece);
                 throw new TableException(" U cannot put ur own king in check ");
             }
 
@@ -247,6 +289,19 @@ namespace Xadrez_console.Chess
                 turn++;
                 ChangePlayer();
             }
+
+            Component p = tab.component(destiny);
+
+            //#SpecialMove EnPassant
+            if (p is Pawn && (destiny.Line == origin.Line + 2  || destiny.Line == origin.Line - 2 ))
+            {
+                EnPassant = p;
+            }
+            else
+            {
+                EnPassant = null;
+            }
+
 
            
 
@@ -301,14 +356,14 @@ namespace Xadrez_console.Chess
             PutNewPiece('f', 1, new Bishop(Color.White, tab));
             PutNewPiece('g', 1, new Knight(Color.White, tab));
             PutNewPiece('h', 1, new Rook(Color.White, tab));
-            PutNewPiece('a', 2, new Pawn(Color.White, tab));
-            PutNewPiece('b', 2, new Pawn(Color.White, tab));
-            PutNewPiece('c', 2, new Pawn(Color.White, tab));
-            PutNewPiece('d', 2, new Pawn(Color.White, tab));
-            PutNewPiece('e', 2, new Pawn(Color.White, tab));
-            PutNewPiece('f', 2, new Pawn(Color.White, tab));
-            PutNewPiece('g', 2, new Pawn(Color.White, tab));
-            PutNewPiece('h', 2, new Pawn(Color.White, tab));
+            PutNewPiece('a', 2, new Pawn(Color.White, tab,this));
+            PutNewPiece('b', 2, new Pawn(Color.White, tab, this));
+            PutNewPiece('c', 2, new Pawn(Color.White, tab, this));
+            PutNewPiece('d', 2, new Pawn(Color.White, tab, this));
+            PutNewPiece('e', 2, new Pawn(Color.White, tab, this));
+            PutNewPiece('f', 2, new Pawn(Color.White, tab, this));
+            PutNewPiece('g', 2, new Pawn(Color.White, tab, this));
+            PutNewPiece('h', 2, new Pawn(Color.White, tab, this));
 
             PutNewPiece('a', 8, new Rook(Color.Black, tab));
             PutNewPiece('b', 8, new Knight(Color.Black, tab));
@@ -318,14 +373,14 @@ namespace Xadrez_console.Chess
             PutNewPiece('f', 8, new Bishop(Color.Black, tab));
             PutNewPiece('g', 8, new Knight(Color.Black, tab));
             PutNewPiece('h', 8, new Rook(Color.Black, tab));
-            PutNewPiece('a', 7, new Pawn(Color.Black, tab));
-            PutNewPiece('b', 7, new Pawn(Color.Black, tab));
-            PutNewPiece('c', 7, new Pawn(Color.Black, tab));
-            PutNewPiece('d', 7, new Pawn(Color.Black, tab));
-            PutNewPiece('e', 7, new Pawn(Color.Black, tab));
-            PutNewPiece('f', 7, new Pawn(Color.Black, tab));
-            PutNewPiece('g', 7, new Pawn(Color.Black, tab));
-            PutNewPiece('h', 7, new Pawn(Color.Black, tab)); 
+            PutNewPiece('a', 7, new Pawn(Color.Black, tab,this));
+            PutNewPiece('b', 7, new Pawn(Color.Black, tab,this));
+            PutNewPiece('c', 7, new Pawn(Color.Black, tab,this));
+            PutNewPiece('d', 7, new Pawn(Color.Black, tab,this));
+            PutNewPiece('e', 7, new Pawn(Color.Black, tab,this));
+            PutNewPiece('f', 7, new Pawn(Color.Black, tab,this));
+            PutNewPiece('g', 7, new Pawn(Color.Black, tab,this));
+            PutNewPiece('h', 7, new Pawn(Color.Black, tab,this)); 
             
         }
     }

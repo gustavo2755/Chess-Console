@@ -1,5 +1,4 @@
-﻿using System;
-using Xadrez_console.Table;
+﻿using Xadrez_console.Table;
 
 namespace Xadrez_console.Chess
 {

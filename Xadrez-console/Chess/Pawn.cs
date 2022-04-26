@@ -4,9 +4,13 @@ namespace Xadrez_console.Chess
 {
     public class Pawn : Component
     {
-        public Pawn(Color color, Tables table) : base(color, table)
+        private ChessMatch Match;
+        public Pawn (Color color, Tables table, ChessMatch match) : base(color, table)
         {
+            Match = match;
         }
+
+
 
         public override string ToString()
         {
@@ -59,6 +63,24 @@ namespace Xadrez_console.Chess
                 {
                     mat[pos.Line, pos.Colun] = true;
                 }
+                //#SpecialMove EnPassan
+                if (Position.Line == 3)
+                {
+                    Position Left = new Position (Position.Line  , Position.Colun - 1);
+                    if(Table.ValidPossition (Left) && HasEnemy(Left) && Table.component(Left) == Match.EnPassant )
+                    {
+
+                        mat[Left.Line - 1, Left.Colun] = true;
+
+                    }
+                    Position Right = new Position(Position.Line, Position.Colun + 1);
+                    if (Table.ValidPossition(Right) && HasEnemy(Right) && Table.component(Right) == Match.EnPassant)
+                    {
+
+                        mat[Right.Line - 1, Right.Colun] = true;
+
+                    }
+                }
             }
             else
             {
@@ -82,6 +104,25 @@ namespace Xadrez_console.Chess
                 if (Table.ValidPossition(pos) && HasEnemy(pos))
                 {
                     mat[pos.Line, pos.Colun] = true;
+                }
+
+                //#SpecialMove EnPassan
+                if (Position.Line == 4)
+                {
+                    Position Left = new Position(Position.Line, Position.Colun - 1);
+                    if (Table.ValidPossition(Left) && HasEnemy(Left) && Table.component(Left) == Match.EnPassant)
+                    {
+
+                        mat[Left.Line + 1, Left.Colun] = true;
+
+                    }
+                    Position Right = new Position(Position.Line, Position.Colun + 1);
+                    if (Table.ValidPossition(Right) && HasEnemy(Right) && Table.component(Right) == Match.EnPassant)
+                    {
+
+                        mat[Right.Line + 1, Right.Colun] = true;
+
+                    }
                 }
             }
 
