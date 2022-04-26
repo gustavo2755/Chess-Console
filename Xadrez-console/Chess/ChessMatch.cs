@@ -272,6 +272,21 @@ namespace Xadrez_console.Chess
                 throw new TableException(" U cannot put ur own king in check ");
             }
 
+            Component p = tab.component(destiny);
+
+            //#Special Move Promotion
+            if(p is Pawn)
+            {
+                if(p.Color == Color.White && destiny.Line ==0 || p.Color == Color.White && destiny.Line == 7)
+                {
+                    p=tab.WithdrawComponet(destiny);
+                    PiecesList.Remove(p);
+                    Component queen = new Queen(p.Color, tab);
+                    tab.PutComponent(queen, destiny);
+                    PiecesList.Add(queen);
+                }
+            }
+
             if (Check(Enemy(ActualPlayer)))
             {
                 check = true;
@@ -290,7 +305,7 @@ namespace Xadrez_console.Chess
                 ChangePlayer();
             }
 
-            Component p = tab.component(destiny);
+            
 
             //#SpecialMove EnPassant
             if (p is Pawn && (destiny.Line == origin.Line + 2  || destiny.Line == origin.Line - 2 ))
