@@ -42,8 +42,10 @@ namespace Xadrez_console
                     }
 
                 }
-                
+                Console.Clear();
+                Screen.PrintMatch(Play);
             }
+            
             catch (TableException e)
             {
                 Console.WriteLine( e.Message );

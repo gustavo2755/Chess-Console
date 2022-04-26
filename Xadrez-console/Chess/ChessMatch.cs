@@ -61,6 +61,44 @@ namespace Xadrez_console.Chess
            
         }
 
+        public bool testCheck(Color c)
+        {
+            if (!Check(c))
+            {
+                return false;
+            }
+            foreach (Component x in PiecesByColor(c))
+            {
+               // if de teste
+                if (x.Position != null)
+                {
+                    bool[,] mat = x.PossibleMoves();
+                    for (int i = 0; i < tab.Lines; i++)
+                    {
+                        for (int j = 0; j < tab.Coluns; j++)
+                        {
+                            if (mat[i, j])
+                            {
+                                Position origin = x.Position;
+                                Position destiny = new Position(i, j);
+                                Component pecaCapturada = Moviment(origin, destiny);
+                                bool testeXeque = Check(c);
+                                UnmakeMoviment(origin, destiny, pecaCapturada);
+                                if (!testeXeque)
+                                {
+                                    return false;
+                                }
+                            }
+                
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
+       
+
         public bool Check (Color c)
         {
             Component k = King(c);
@@ -85,6 +123,7 @@ namespace Xadrez_console.Chess
             }
             return false;
         }
+
 
         private Color Enemy (Color c)
         {
@@ -157,9 +196,17 @@ namespace Xadrez_console.Chess
             {
                 check = false;
             }
+            if (testCheck(Enemy(ActualPlayer)))
+            {
+                Finished = true;
+            }
+            else
+            {
+                turn++;
+                ChangePlayer();
+            }
 
-            turn++;
-            ChangePlayer();
+           
 
         }
         private void ChangePlayer()
